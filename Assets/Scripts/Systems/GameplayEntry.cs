@@ -4,16 +4,19 @@ public class GameplayEntry : MonoBehaviour
 {
     [Header("Preferences")]
     [SerializeField] private Transform _mainCharacterSpawnPoint;
-
-    [Space, Header("Inputs")] 
+    
+    [Space]
     [SerializeField] private InputHandler _inputHandler;
+    [SerializeField] private GameFlow _gameFlow;
     
     [Space, Header("Loggers")]
     [SerializeField] private Logger _factoryLogger;
 
     private const string MainCharacter = "Templates/Character/Prefab";
+    private const string Ghost = "Templates/Enemies/Ghost/Prefab";
 
     private Factory _playerFactory;
+    private Factory _enemyFactory;
     private MainCharacter _characterInstance;
 
     private void Awake()
@@ -21,6 +24,10 @@ public class GameplayEntry : MonoBehaviour
         BuildFactories();
         BuildPlayer();
         BuildInputs();
+
+        _enemyFactory = new(_factoryLogger, AssetProvider.GetBehaviourOfType<BaseEnemy>(Ghost));
+        _gameFlow.Build(_characterInstance, _enemyFactory);
+        _gameFlow.StartWaves();
     }
     
     private void BuildFactories() 

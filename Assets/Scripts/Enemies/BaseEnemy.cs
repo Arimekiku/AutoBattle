@@ -1,13 +1,14 @@
-using Player;
+﻿using Enemies;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class MainCharacter : MonoBehaviour
+public class BaseEnemy : MonoBehaviour
 {
-    [SerializeField] private CharacterSettings _settings;
+    [SerializeField] private EnemySettings _settings;
 
     private float _currentMovementSpeed;
     private int _currentHealth;
+    private int _currentDamage;
     
     private Rigidbody2D _body;
 
@@ -17,12 +18,19 @@ public class MainCharacter : MonoBehaviour
 
         _currentMovementSpeed = _settings.MovementSpeed;
         _currentHealth = _settings.BaseHealth;
+        _currentDamage = _settings.BaseDamage;
     }
 
-    public void MoveCharacter(Vector2 movementVector)
+    public void Move(Vector2 targetPosition)
     {
+        Vector2 movementVector = targetPosition - _body.position;
         Vector2 movementAmount = movementVector.normalized * (Time.deltaTime * _currentMovementSpeed);
         
         _body.MovePosition(_body.position + movementAmount);
+    }
+
+    public virtual void Attack()
+    {
+        
     }
 }
