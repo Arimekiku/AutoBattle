@@ -11,7 +11,7 @@ public class GameplayEntry : MonoBehaviour
     [Space, Header("Loggers")]
     [SerializeField] private Logger _factoryLogger;
 
-    private const string MainCharacter = "Prefabs/Character";
+    private const string MainCharacter = "Templates/Character/Prefab";
 
     private Factory _playerFactory;
     private MainCharacter _characterInstance;
